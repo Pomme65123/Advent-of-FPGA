@@ -24,24 +24,14 @@ The circuits track a position on a circular track (0-99) and process R/L turn in
 
 ## Prerequisites
 
-- OCaml (tested with opam)
-- HardCAML library (v0.17.0 or later)
-- Dune build system (v3.0 or later)
 - **input.txt file** - Must be placed in the root directory (same level as HDL folder)
-
-## Installation
-
-If you haven't already, install the required dependencies:
-
-```bash
-opam install hardcaml dune
-```
 
 ## Building
 
 From the HDL directory:
 
-```bash
+```
+cd ./HDL/
 opam exec -- dune build
 ```
 
@@ -52,15 +42,24 @@ opam exec -- dune build
 ### Part One
 
 From the HDL directory:
-```bash
+```
 ./_build/default/test_partOne_hardcaml.exe
 ```
 
 ### Part Two
 
 From the HDL directory:
-```bash
+```
 ./_build/default/test_partTwo_hardcaml.exe
+```
+
+### Original Solutions
+
+From the Root directory:
+```
+ocamlopt mainPartOne.ml
+ocamlopt mainPartOne.cmx mainPartTwo.ml
+./a.out
 ```
 
 ## Implementation Details
@@ -68,26 +67,24 @@ From the HDL directory:
 ### Part One
 - **Position width**: 12 bits (signed, range -2048 to 2047, covers -999 to 1098)
 - **Steps width**: 10 bits (0-1023, actual max is 999)
-- **Zero counter**: 13 bits (0-8191, sufficient for 1172)
+- **Zero counter**: 13 bits (0-8191, sufficient for the input.txt instruction length)
 
 ### Part Two
 - **Position width**: 12 bits (signed)
 - **Steps width**: 10 bits
-- **Zero counter**: 13 bits (0-8191, sufficient for 6932)
+- **Zero counter**: 13 bits (0-8191, sufficient for my testcase, but can easily overflow)
 
 ### Logic
 
 - **Combinational normalization**: Uses iterative add/subtract (11 iterations) to normalize position to [0,99] range
 - **Integer division**: Implements division by 100 using repeated subtraction for Part Two (11 iterations)
-- **Single-cycle processing**: Each instruction processes in one clock cycle after reset
-- **Stateful design**: Uses register feedback with combined [zeros | position] state
 
 ## Circuit Architecture
 
 Both circuits use:
 - Clock and reset inputs
 - Enable signal for processing control
-- Turn signal (1=R, 0=L)
+- Turn signal (R = 1, L = 0)
 - Steps input (10 bits)
 - Position and zeros outputs
 

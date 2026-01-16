@@ -95,5 +95,5 @@ let () =
   (* 
     Prints the answer.
   *)
-  print_int !zeros;
+  Printf.printf "\nPart Two Answer: %d\n" !zeros;
   print_newline ();  

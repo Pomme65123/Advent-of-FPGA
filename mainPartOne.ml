@@ -95,16 +95,14 @@ let print_instr (i : instr) =
 let data : instr array = Array.of_list (read_instructions file)
 
 let () =
-  Printf.printf "\n=== Software (mainPartOne.ml) ===\n\n";
   let zeros = ref 0 in                                  (* Number of zeros start at 0 *)
   let position = ref 50 in                              (* Position starts at 50 *)
-  Printf.printf "Initial: position=50, zeros=0\n\n";
   for i = 0 to Array.length data - 1 do
     let {turn = t; steps = s} = data.(i) in
     if t = R then
-      position := !position + s                         (* If steps is positive, then add to the position *)
+      position := !position + s
     else
-      position := !position - s;                        (* If steps is negative, then subtract from the position *)
+      position := !position - s;
    
     (* 
       We need to make sure position is bounded between 0 and 99
@@ -123,21 +121,11 @@ let () =
     *)
     position := ((!position mod 100) + 100) mod 100;
 
-    (* If position is equal to 0 then we increment *)
     if !position = 0 then
-      incr zeros;
-    
-    (* Print every instruction *)
-    Printf.printf "Instr %4d: %c%-3d -> position=%2d, zeros=%d\n"
-      (i + 1)
-      (if t = R then 'R' else 'L')
-      s
-      !position
-      !zeros
+      incr zeros
   done;
 
-  (* Prints the answer *)
-  Printf.printf "\nFinal Answer: %d\n" !zeros;
+  Printf.printf "\nPart One Answer: %d\n" !zeros;
   print_newline ();
 
 
