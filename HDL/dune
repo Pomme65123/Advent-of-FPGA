@@ -1,0 +1,7 @@
+(executable
+ (name test_partOne_hardcaml)
+ (libraries hardcaml))
+
+(executable
+ (name test_partTwo_hardcaml)
+ (libraries hardcaml))

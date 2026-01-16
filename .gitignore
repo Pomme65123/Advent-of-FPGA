@@ -1,0 +1,13 @@
+_build/
+*.exe
+input.txt
+*.cmi
+*.cmo
+*.cmx
+*.o
+*.a
+*.cma
+*.cmxa
+*.cmxs
+.vscode/
+__pycache__/
